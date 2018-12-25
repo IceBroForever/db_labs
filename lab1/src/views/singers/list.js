@@ -6,25 +6,53 @@ export default async function(singers = []) {
     return null;
   }
 
-  const choices = singers.map(singer => ({
-    name: singer.id,
-    message: singer.nickname
-  }));
-  choices.push({
-    name: "back",
-    message: "Go back"
-  });
+  let page = 0;
 
-  const questions = {
-    type: "select",
-    name: "id",
-    message: "Choose singer",
-    choices
-  };
+  while (true) {
+    const choices = singers.slice(page, page + 10).map(singer => ({
+      name: singer.id,
+      message: singer.nickname
+    }));
 
-  const { id } = await prompt(questions);
+    if (page != 0) {
+      choices.push({
+        name: "prev",
+        message: "Previous page"
+      });
+    }
 
-  if (id === "back") return null;
+    if (page + 10 <= singers.length) {
+      choices.push({
+        name: "next",
+        message: "Next page"
+      });
+    }
 
-  return singers.find(singer => singer.id === id);
+    choices.push({
+      name: "back",
+      message: "Go back"
+    });
+
+    const questions = {
+      type: "select",
+      name: "id",
+      message: "Choose singer",
+      choices
+    };
+
+    const { id } = await prompt(questions);
+
+    switch (id) {
+      case "prev":
+        page--;
+        break;
+      case "next":
+        page++;
+        break;
+      case "back":
+        return null;
+      default:
+        return singers.find(singer => singer.id === id);
+    }
+  }
 }

@@ -6,25 +6,53 @@ export default async function(albums = []) {
     return null;
   }
 
-  const choices = albums.map(album => ({
-    name: album.id,
-    message: album.name
-  }));
-  choices.push({
-    name: "back",
-    message: "Go back"
-  });
+  let page = 0;
 
-  const questions = {
-    type: "select",
-    name: "id",
-    message: "Choose album",
-    choices
-  };
+  while (true) {
+    const choices = albums.slice(page, page + 10).map(album => ({
+      name: album.id,
+      message: album.name
+    }));
 
-  const { id } = await prompt(questions);
+    if (page != 0) {
+      choices.push({
+        name: "prev",
+        message: "Previous page"
+      });
+    }
 
-  if (id === "back") return null;
+    if (page + 10 < albums.length) {
+      choices.push({
+        name: "next",
+        message: "Next page"
+      });
+    }
 
-  return albums.find(album => album.id === id);
+    choices.push({
+      name: "back",
+      message: "Go back"
+    });
+
+    const questions = {
+      type: "select",
+      name: "id",
+      message: "Choose album",
+      choices
+    };
+
+    const { id } = await prompt(questions);
+
+    switch (id) {
+      case "prev":
+        page--;
+        break;
+      case "next":
+        page++;
+        break;
+      case "back":
+        return null;
+      default:
+        return albums.find(album => album.id === id);
+    }
+  }
 }
