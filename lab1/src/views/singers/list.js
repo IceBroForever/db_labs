@@ -23,7 +23,6 @@ export default async function(singers = []) {
   };
 
   const { id } = await prompt(questions);
-  console.log(id);
 
   if (id === "back") return null;
 

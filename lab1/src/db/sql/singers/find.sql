@@ -1,2 +1,2 @@
 SELECT * FROM singers
-    WHERE make_tsvector(name, lyrics) @@ plainto_tsquery(${input});
+    WHERE singers_make_tsvector(nickname, name, surname) @@ plainto_tsquery(${input});

@@ -14,6 +14,10 @@ export default class Albums {
     return dbDriver.any(queries.getBySinger, { id });
   }
 
+  static getBySong(id) {
+    return dbDriver.any(queries.getBySong, { id });
+  }
+
   static addSong(album, song) {
     return dbDriver.none(queries.addSong, { album, song });
   }

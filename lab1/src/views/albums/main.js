@@ -1,6 +1,7 @@
 import { prompt } from "enquirer";
 import getById from "./getById";
 import getBySinger from "./getBySinger";
+import getBySong from "./getBySong";
 import findByGenre from "./findByGenre";
 import findByRating from "./findByRating";
 
@@ -17,6 +18,10 @@ const questions = [
       {
         name: "getBySinger",
         message: "Get by singer"
+      },
+      {
+        name: "getBySong",
+        message: "Get by song"
       },
       {
         name: "findByGenre",
@@ -46,6 +51,9 @@ export default async function() {
         break;
       case "getBySinger":
         await getBySinger();
+        break;
+      case "getBySong":
+        await getBySong();
         break;
       case "findByRating":
         await findByRating();

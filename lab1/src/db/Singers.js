@@ -14,6 +14,10 @@ export default class Singers {
     return dbDriver.manyOrNone(queries.getAll);
   }
 
+  static getBySong(id) {
+    return dbDriver.any(queries.getBySong, { id });
+  }
+
   static find(input) {
     return dbDriver.manyOrNone(queries.find, { input });
   }
