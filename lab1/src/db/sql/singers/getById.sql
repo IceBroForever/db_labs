@@ -1,0 +1,1 @@
+SELECT * FROM singers WHERE id=${id};

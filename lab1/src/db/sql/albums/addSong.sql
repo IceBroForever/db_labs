@@ -1,0 +1,1 @@
+INSERT INTO albums_songs VALUES (${album}, ${song})
